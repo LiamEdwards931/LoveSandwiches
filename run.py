@@ -78,13 +78,28 @@ def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
+ 
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
 
     return surplus_data
+
+
+def get_last_5_sales():
+    """
+    gets the last 5 entries of sales 
+    calculates the average 
+    adds 10% of the sales as an integer
+    """
+    sales = SHEET.worksheet("sales")
+    
+    columns = []
+    for ind in range(1, 7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+    return columns
 
 
 def main():
@@ -100,3 +115,4 @@ def main():
 
 print("Welcome to Love Sandwiches Data Automation")
 main()
+sales_columns = get_last_5_sales()
